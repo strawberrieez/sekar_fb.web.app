@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "365882158632",
+    "project_id": "sekar-fb",
+    "storage_bucket": "sekar-fb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:365882158632:android:fbe1fdc97fa1274f13cf1d",
+        "android_client_info": {
+          "package_name": "com.example.sekar_fb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "365882158632-gndlpf8qavbnahitk27atgo2cetrbft1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMTW-YZ9ynVT4Siv6_GgJsG6wFWqhsL8k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "365882158632-gndlpf8qavbnahitk27atgo2cetrbft1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
