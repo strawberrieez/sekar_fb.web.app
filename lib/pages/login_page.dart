@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:sekar_fb/pages/home_page.dart';
 import 'package:simple_icons/simple_icons.dart';
 import 'package:universal_html/html.dart' as html;
 
@@ -30,8 +31,11 @@ class LoginPage extends StatelessWidget {
                 width: 200,
                 child: ElevatedButton(
                   onPressed: () async {
-                    final anon = await FirebaseAuth.instance.signInAnonymously();
-                    debugPrint(anon.toString());
+                    final route = MaterialPageRoute(
+                      builder: (context) => const HomePage(),
+                    );
+                    Navigator.pushReplacement(context, route);
+                    await FirebaseAuth.instance.signInAnonymously();
                   },
                   child: const Row(
                     children: [

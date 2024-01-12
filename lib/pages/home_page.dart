@@ -8,7 +8,15 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Toko oren'),
+        title: const Center(child: Text('Toko oren')),
+        actions: [
+          IconButton(
+            onPressed: () async {
+              await FirebaseAuth.instance.signOut();
+            },
+            icon: const Icon(Icons.logout),
+          ),
+        ],
       ),
       body: StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
@@ -16,6 +24,7 @@ class HomePage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              // snapshot.hasData ? const HomePage() : const LoginPage(),
               const Text('Halo, selamat datang!'),
               Text(snapshot.data!.uid),
               const SizedBox(height: 30),
