@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sekar_fb/home.dart';
+import 'package:sekar_fb/home_page.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

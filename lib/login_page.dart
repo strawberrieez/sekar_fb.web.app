@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:simple_icons/simple_icons.dart';
 import 'package:universal_html/html.dart' as html;
 
-class HomePage extends StatelessWidget {
-  const HomePage({
+class LoginPage extends StatelessWidget {
+  const LoginPage({
     super.key,
   });
 
@@ -48,7 +48,10 @@ class HomePage extends StatelessWidget {
               SizedBox(
                 width: 200,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    final google = GoogleAuthProvider().setCustomParameters({'prompt': 'select_account'});
+                    await FirebaseAuth.instance.signInWithPopup(google);
+                  },
                   child: const Row(
                     children: [
                       Icon(SimpleIcons.google),
