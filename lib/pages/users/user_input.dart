@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:sekar_fb/model/users.dart';
+import 'package:sekar_fb/pages/users/user_ctrl.dart';
 import 'package:sekar_fb/pages/users/user_data.dart';
 
 class UserInput extends StatefulWidget {
@@ -74,10 +76,29 @@ class _UserInputState extends State<UserInput> {
               ),
             ),
             ElevatedButton(
-              onPressed: () {},
-              child: const Text(
-                "submit",
-              ),
+              onPressed: () async {
+                final valNama = ctrlNama.text;
+                final valHarga = int.parse(ctrlHarga.text);
+                final docId = UniqueKey().toString();
+                final newUser = UserX(
+                  createdAt: DateTime.now().toString(),
+                  nama: valNama,
+                  harga: valHarga,
+                  id: docId,
+                );
+                setState(() {
+                  isLoading = true;
+                });
+                await create(newUser);
+                setState(() {
+                  isLoading = false;
+                });
+                ctrlHarga.clear();
+                ctrlNama.clear();
+                // ignore: use_build_context_synchronously
+                Navigator.pop(context);
+              },
+              child: Text(isLoading ? 'loading...' : 'submit'),
             ),
           ],
         ),
