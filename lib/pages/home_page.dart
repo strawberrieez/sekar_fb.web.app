@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:sekar_fb/pages/users/user_input.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -11,6 +12,10 @@ class HomePage extends StatelessWidget {
         title: const Center(child: Text('Toko oren')),
         actions: [
           IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.person),
+          ),
+          IconButton(
             onPressed: () async {
               await FirebaseAuth.instance.signOut();
             },
@@ -18,30 +23,19 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
-      body: StreamBuilder(
-        stream: FirebaseAuth.instance.authStateChanges(),
-        builder: (context, snapshot) => Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // snapshot.hasData ? const HomePage() : const LoginPage(),
-              const Text('Halo, selamat datang!'),
-              Text(snapshot.data!.uid),
-              const SizedBox(height: 30),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text('Silahkan inputkan barang'),
-                  const SizedBox(height: 10),
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.add_circle_outline),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const UserInput()),
+              );
+            },
+            child: const Icon(Icons.add),
+          )
+        ],
       ),
     );
   }

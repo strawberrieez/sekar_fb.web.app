@@ -45,6 +45,8 @@
     "*README.*": true,
     "*sekar_fb": true,
     "*sekar_fb.*": true,
+    "*storage": true,
+    "*storage.*": true,
     "*test": true,
     "*test.*": true,
     "*web": true,
