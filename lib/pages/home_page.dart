@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sekar_fb/pages/users/user_ctrl.dart';
 import 'package:sekar_fb/pages/users/user_data.dart';
 import 'package:sekar_fb/pages/users/widgets/user_detail.dart';
-import 'package:sekar_fb/pages/users/widgets/user_input.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

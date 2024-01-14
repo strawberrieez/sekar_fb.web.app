@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:sekar_fb/model/users.dart';
 import 'package:sekar_fb/pages/users/user_ctrl.dart';
@@ -90,7 +89,7 @@ class _UserInputState extends State<UserInput> {
                 setState(() {
                   isLoading = true;
                 });
-                await FirebaseFirestore.instance.collection('username').doc(docId).set({'nama': valNama, 'id': docId});
+                await create(newUser);
                 setState(() {
                   isLoading = false;
                 });
