@@ -26,6 +26,19 @@ class LoginPage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              // SizedBox(
+              //   width: 200,
+              //   child: ElevatedButton(
+              //     onPressed: () {
+              //       Navigator.push(
+              //         context,
+              //         MaterialPageRoute(builder: (context) => const UserInput()),
+              //       );
+              //     },
+              //     child: const Text('masuk sebagai admin'),
+              //   ),
+              // ),
+              const SizedBox(height: 20),
               SizedBox(
                 width: 200,
                 child: ElevatedButton(
