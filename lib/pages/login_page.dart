@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:sekar_fb/pages/admin.dart';
 import 'package:sekar_fb/pages/users/widgets/user_input.dart';
 import 'package:simple_icons/simple_icons.dart';
 import 'package:universal_html/html.dart' as html;
@@ -33,7 +34,7 @@ class LoginPage extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const UserInput()),
+                      MaterialPageRoute(builder: (context) => const AdminView()),
                     );
                   },
                   child: const Text('masuk sebagai admin'),
