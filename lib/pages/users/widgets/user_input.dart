@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sekar_fb/model/users.dart';
 import 'package:sekar_fb/pages/users/user_ctrl.dart';
 import 'package:sekar_fb/pages/users/user_data.dart';
+import 'package:image_picker/image_picker.dart';
 
 class UserInput extends StatefulWidget {
   const UserInput({super.key});
@@ -21,6 +22,31 @@ class _UserInputState extends State<UserInput> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            pickedImage == null
+                ? const SizedBox.shrink()
+                : SizedBox(
+                    height: 150,
+                    width: 150,
+                    child: Image.network('${pickedImage?.path}'),
+                  ),
+            SizedBox(
+              width: 230,
+              child: ElevatedButton(
+                onPressed: () async {
+                  pickedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
+                  setState(() {});
+                },
+                child: const Row(
+                  children: [
+                    Icon(Icons.add),
+                    SizedBox(width: 5),
+                    Text(
+                      "Tambahkan foto produk",
+                    ),
+                  ],
+                ),
+              ),
+            ),
             Container(
               margin: const EdgeInsets.all(10),
               child: TextField(
@@ -77,6 +103,8 @@ class _UserInputState extends State<UserInput> {
             ),
             ElevatedButton(
               onPressed: () async {
+                pickedImageUpload = pickedImage;
+                await upload();
                 final valNama = ctrlNama.text;
                 final valHarga = int.parse(ctrlHarga.text);
                 final docId = UniqueKey().toString();

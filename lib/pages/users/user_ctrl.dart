@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 import 'package:sekar_fb/model/users.dart';
 import 'package:sekar_fb/pages/users/user_data.dart';
 
@@ -64,4 +66,16 @@ Future<void> updateDoc(UserX data) async {
   await FirebaseFirestore.instance.collection('DetailBarang').doc(docId).set(data.toMap());
   final index = userList.indexWhere((element) => element.id == docId);
   userList[index] = data;
+}
+
+Future<String> upload() async {
+  final namaPhoto = pickedImageUpload?.name;
+  final typePhoto = pickedImageUpload?.mimeType;
+  final data = await pickedImageUpload!.readAsBytes();
+  final metaData = SettableMetadata(contentType: typePhoto);
+  final uploadImage = await FirebaseStorage.instance.ref('gallery/$namaPhoto').putData(data, metaData);
+
+  imageUrl = await uploadImage.ref.getDownloadURL();
+  debugPrint(uploadImage.toString());
+  return uploadImage.toString();
 }
