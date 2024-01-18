@@ -40,7 +40,7 @@ class LoginPage extends StatelessWidget {
               // ),
               const SizedBox(height: 20),
               SizedBox(
-                width: 200,
+                width: 220,
                 child: ElevatedButton(
                   onPressed: () async {
                     await FirebaseAuth.instance.signInAnonymously();
@@ -48,9 +48,7 @@ class LoginPage extends StatelessWidget {
                   child: const Row(
                     children: [
                       Icon(Icons.person),
-                      SizedBox(
-                        width: 8,
-                      ),
+                      SizedBox(width: 8),
                       Text("Sign in anonymous"),
                     ],
                   ),
@@ -58,7 +56,7 @@ class LoginPage extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               SizedBox(
-                width: 200,
+                width: 220,
                 child: ElevatedButton(
                   onPressed: () async {
                     final google = GoogleAuthProvider().setCustomParameters({'prompt': 'select_account'});

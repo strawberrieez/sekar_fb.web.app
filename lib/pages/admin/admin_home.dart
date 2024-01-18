@@ -1,35 +1,29 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:sekar_fb/pages/users/user_ctrl.dart';
-import 'package:sekar_fb/pages/users/user_data.dart';
-import 'package:sekar_fb/pages/users/widgets/user_detail.dart';
-import 'package:sekar_fb/pages/users/widgets/user_input.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:sekar_fb/pages/ctrl/user_ctrl.dart';
+import 'package:sekar_fb/pages/ctrl/user_data.dart';
+import 'package:sekar_fb/pages/admin/admin_detail.dart';
+import 'package:sekar_fb/pages/admin/admin_input.dart';
 
-class AdminView extends StatefulWidget {
-  const AdminView({super.key});
+class AdminHome extends StatefulWidget {
+  const AdminHome({super.key});
 
   @override
-  State<AdminView> createState() => _AdminViewState();
+  State<AdminHome> createState() => _AdminHomeState();
 }
 
-class _AdminViewState extends State<AdminView> {
+class _AdminHomeState extends State<AdminHome> {
+  @override
+  void initState() {
+    addToUserList();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Center(child: Text('Toko oren')),
-          actions: [
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.person),
-            ),
-            IconButton(
-              onPressed: () async {
-                await FirebaseAuth.instance.signOut();
-              },
-              icon: const Icon(Icons.logout),
-            ),
-          ],
+          title: const Center(child: Text('admin')),
         ),
         floatingActionButton: Column(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -45,7 +39,7 @@ class _AdminViewState extends State<AdminView> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const UserInput()),
+                  MaterialPageRoute(builder: (context) => const AdminInput()),
                 );
               },
               child: const Icon(Icons.add),
@@ -56,20 +50,22 @@ class _AdminViewState extends State<AdminView> {
           future: getColl(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              if (userList.isEmpty) {
+              if (produkList.isEmpty) {
                 return const Center(child: Text('barang kosong'));
               }
               return SingleChildScrollView(
                 child: Column(
                   children: [
                     ...List.generate(
-                      userList.length,
+                      produkList.length,
                       (index) {
-                        final data = userList[index];
+                        final data = produkList[index];
                         final id = data.id;
                         return Card(
                           child: ListTile(
-                            selectedTileColor: Colors.blue,
+                            leading: CircleAvatar(
+                              backgroundImage: NetworkImage(data.image),
+                            ),
                             selected: selectedId == id,
                             onTap: () {
                               setState(() {
@@ -77,7 +73,10 @@ class _AdminViewState extends State<AdminView> {
                               });
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => const UserDetail()),
+                                MaterialPageRoute(
+                                    builder: (context) => AdminDetail(
+                                          id: id,
+                                        )),
                               );
                             },
                             title: Text(

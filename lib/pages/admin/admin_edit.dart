@@ -1,36 +1,44 @@
 import 'package:flutter/material.dart';
-import 'package:sekar_fb/model/users.dart';
-import 'package:sekar_fb/pages/users/user_ctrl.dart';
-import 'package:sekar_fb/pages/users/user_data.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:sekar_fb/model/users.dart';
+import 'package:sekar_fb/pages/ctrl/user_ctrl.dart';
+import 'package:sekar_fb/pages/ctrl/user_data.dart';
 
-class UserInput extends StatefulWidget {
-  const UserInput({super.key});
+class AdminEdit extends StatefulWidget {
+  const AdminEdit({super.key});
 
   @override
-  State<UserInput> createState() => _UserInputState();
+  State<AdminEdit> createState() => _AdminEditState();
 }
 
-class _UserInputState extends State<UserInput> {
+class _AdminEditState extends State<AdminEdit> {
+  @override
+  void initState() {
+    super.initState();
+    debugPrint(selectedId);
+    getDoc(selectedId);
+    editNama.text = '${productDetail?.nama}';
+    editHarga.text = '${productDetail?.harga}';
+    debugPrint(productDetail.toString());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(child: Text('Toko oren')),
+        title: const Text('update'),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            pickedImage == null
-                ? const SizedBox.shrink()
-                : SizedBox(
-                    height: 150,
-                    width: 150,
-                    child: Image.network('${pickedImage?.path}'),
-                  ),
             SizedBox(
-              width: 230,
+              height: 250,
+              width: 250,
+              child: Image.network(pickedImage == null ? '${productDetail?.image}' : '${pickedImage?.path}'),
+            ),
+            SizedBox(
+              width: 250,
               child: ElevatedButton(
                 onPressed: () async {
                   pickedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -50,21 +58,21 @@ class _UserInputState extends State<UserInput> {
             Container(
               margin: const EdgeInsets.all(10),
               child: TextField(
-                controller: ctrlNama,
+                controller: editNama,
                 onChanged: (value) {
                   setState(() {
-                    showClearNama = value.isNotEmpty;
+                    scNama = value.isNotEmpty;
                   });
                 },
                 decoration: InputDecoration(
                   hintText: 'Masukkan nama barang',
                   labelText: 'nama barang',
-                  suffixIcon: showClearNama
+                  suffixIcon: scNama
                       ? IconButton(
                           onPressed: () {
-                            ctrlNama.clear();
+                            editNama.clear();
                             setState(() {
-                              showClearNama = false;
+                              scNama = false;
                             });
                           },
                           icon: const Icon(Icons.clear),
@@ -77,21 +85,21 @@ class _UserInputState extends State<UserInput> {
             Container(
               margin: const EdgeInsets.all(10),
               child: TextField(
-                controller: ctrlHarga,
+                controller: editHarga,
                 onChanged: (value) {
                   setState(() {
-                    showClearHarga = value.isNotEmpty;
+                    scHarga = value.isNotEmpty;
                   });
                 },
                 decoration: InputDecoration(
                   hintText: 'Masukkan harga barang',
                   labelText: 'harga barang',
-                  suffixIcon: showClearHarga
+                  suffixIcon: scHarga
                       ? IconButton(
                           onPressed: () {
-                            ctrlHarga.clear();
+                            editHarga.clear();
                             setState(() {
-                              showClearHarga = false;
+                              scHarga = false;
                             });
                           },
                           icon: const Icon(Icons.clear),
@@ -103,30 +111,31 @@ class _UserInputState extends State<UserInput> {
             ),
             ElevatedButton(
               onPressed: () async {
-                pickedImageUpload = pickedImage;
-                await upload();
-                final valNama = ctrlNama.text;
-                final valHarga = int.parse(ctrlHarga.text);
-                final docId = UniqueKey().toString();
-                final newUser = UserX(
-                  createdAt: DateTime.now().toString(),
-                  nama: valNama,
-                  harga: valHarga,
-                  id: docId,
-                );
+                // pickedImageUpdate = pickedImage;
+                final valNama = editNama.text;
+                final valHarga = int.parse(editHarga.text);
+                // await updateDoc(newUserUpdate);
                 setState(() {
                   isLoading = true;
                 });
-                await create(newUser);
+                await upload();
+                setState(() {});
+                final newUserUpdate = Product(
+                    nama: valNama,
+                    harga: valHarga,
+                    image: imageUrl,
+                    id: productDetail!.id,
+                    createdAt: productDetail!.createdAt);
+                await updateDoc(newUserUpdate);
                 setState(() {
                   isLoading = false;
                 });
-                ctrlHarga.clear();
-                ctrlNama.clear();
+                inputHarga.clear();
+                inputNama.clear();
                 // ignore: use_build_context_synchronously
                 Navigator.pop(context);
               },
-              child: Text(isLoading ? 'loading...' : 'submit'),
+              child: Text(isLoading ? 'loading...' : 'update'),
             ),
           ],
         ),

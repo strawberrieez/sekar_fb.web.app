@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:sekar_fb/pages/users/user_ctrl.dart';
-import 'package:sekar_fb/pages/users/user_data.dart';
-import 'package:sekar_fb/pages/users/widgets/user_detail.dart';
-import 'package:sekar_fb/pages/users/widgets/user_input.dart';
+import 'package:sekar_fb/pages/admin/admin_home.dart';
+import 'package:sekar_fb/pages/ctrl/user_ctrl.dart';
+import 'package:sekar_fb/pages/ctrl/user_data.dart';
+import 'package:sekar_fb/pages/cust/detail_cust.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -23,16 +23,22 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Center(child: Text('Toko oren')),
+          title: const Center(child: Text('toko oren')),
           actions: [
             IconButton(
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const UserInput()),
+                  MaterialPageRoute(builder: (context) => const AdminHome()),
                 );
               },
               icon: const Icon(Icons.person),
+            ),
+            IconButton(
+              onPressed: () async {
+                await FirebaseAuth.instance.currentUser!.delete();
+              },
+              icon: const Icon(Icons.delete_forever),
             ),
             IconButton(
               onPressed: () async {
@@ -52,20 +58,20 @@ class _HomePageState extends State<HomePage> {
           future: getColl(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              if (userList.isEmpty) {
+              if (produkList.isEmpty) {
                 return const Center(child: Text('barang kosong'));
               }
               return SingleChildScrollView(
                 child: Column(
                   children: [
                     ...List.generate(
-                      userList.length,
+                      produkList.length,
                       (index) {
-                        final data = userList[index];
+                        final data = produkList[index];
                         final id = data.id;
                         return Card(
                           child: ListTile(
-                            selectedTileColor: Colors.blue,
+                            leading: CircleAvatar(backgroundImage: NetworkImage(data.image)),
                             selected: selectedId == id,
                             onTap: () {
                               setState(() {
@@ -73,13 +79,16 @@ class _HomePageState extends State<HomePage> {
                               });
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => const UserDetail()),
+                                MaterialPageRoute(
+                                    builder: (context) => DetailCust(
+                                          id: id,
+                                        )),
                               );
                             },
                             title: Text(
                               data.nama,
                             ),
-                            subtitle: Text(data.createdAt),
+                            subtitle: Text('Rp. ${data.harga}'),
                           ),
                         );
                       },
