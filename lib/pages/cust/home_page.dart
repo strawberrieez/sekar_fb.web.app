@@ -49,6 +49,7 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
         floatingActionButton: FloatingActionButton(
+          heroTag: null,
           onPressed: () {
             setState(() {});
           },
@@ -74,9 +75,6 @@ class _HomePageState extends State<HomePage> {
                             leading: CircleAvatar(backgroundImage: NetworkImage(data.image)),
                             selected: selectedId == id,
                             onTap: () {
-                              setState(() {
-                                selectedId = id;
-                              });
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -84,6 +82,9 @@ class _HomePageState extends State<HomePage> {
                                           id: id,
                                         )),
                               );
+                              setState(() {
+                                selectedId = id;
+                              });
                             },
                             title: Text(
                               data.nama,

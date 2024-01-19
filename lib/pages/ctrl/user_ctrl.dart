@@ -4,23 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:sekar_fb/model/users.dart';
 import 'package:sekar_fb/pages/ctrl/user_data.dart';
 
-Future<void> create(Product data) async {
-  final docId = data.id;
-  final nama = data.nama;
-  final harga = data.harga;
-  final createdAt = data.createdAt;
-  final image = data.image;
-  await FirebaseFirestore.instance.collection('Barang').doc(docId).set({
-    'nama': nama,
-    'id': docId,
-    'created_at': createdAt,
-    'image': image,
-    'harga': harga,
-  });
-  await FirebaseFirestore.instance.collection('DetailBarang').doc(docId).set(data.toMap());
-  produkList.insert(0, data);
-}
-
 Future<List<Product>> getColl() async {
   List<Product> products = [];
 
@@ -68,27 +51,42 @@ Future<String> upload() async {
   final uploadImage = await FirebaseStorage.instance.ref(namaPhoto).putData(data, metaData);
 
   imageUrl = await uploadImage.ref.getDownloadURL();
-  debugPrint(uploadImage.toString());
+  // debugPrint(uploadImage.toString());
   return imageUrl;
 }
 
-Future<void> updateDoc(Product data) async {
-  final docId = data.id;
-  final nama = data.nama;
-  final createdAt = data.createdAt;
-  final image = data.image;
+Future<void> updateDoc(Product updateData) async {
+  final docId = updateData.id;
+  final nama = updateData.nama;
+  final createdAt = updateData.createdAt;
+  final image = updateData.image;
+  final harga = updateData.harga;
   debugPrint(docId);
   await FirebaseFirestore.instance.collection('Barang').doc(docId).set({
     'nama': nama,
     'id': docId,
     'created_at': createdAt,
     'image': image,
+    'harga': harga,
   });
-  await FirebaseFirestore.instance.collection('DetailBarang').doc(docId).set(data.toMap());
+  await FirebaseFirestore.instance.collection('DetailBarang').doc(docId).set(updateData.toMap());
   final index = produkList.indexWhere((element) => element.id == docId);
-  produkList[index] = data;
+  produkList[index] = updateData;
 }
 
-void initProduct() async {
-  await getDoc(selectedId);
+Future<void> create(Product data) async {
+  final docId = data.id;
+  final nama = data.nama;
+  final harga = data.harga;
+  final createdAt = data.createdAt;
+  final image = data.image;
+  await FirebaseFirestore.instance.collection('Barang').doc(docId).set({
+    'nama': nama,
+    'id': docId,
+    'created_at': createdAt,
+    'image': image,
+    'harga': harga,
+  });
+  await FirebaseFirestore.instance.collection('DetailBarang').doc(docId).set(data.toMap());
+  produkList.insert(0, data);
 }

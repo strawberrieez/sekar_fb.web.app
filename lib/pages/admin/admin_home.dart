@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sekar_fb/pages/ctrl/user_ctrl.dart';
 import 'package:sekar_fb/pages/ctrl/user_data.dart';
 import 'package:sekar_fb/pages/admin/admin_detail.dart';
@@ -29,6 +28,7 @@ class _AdminHomeState extends State<AdminHome> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             FloatingActionButton(
+              heroTag: '1',
               onPressed: () {
                 setState(() {});
               },
@@ -36,6 +36,7 @@ class _AdminHomeState extends State<AdminHome> {
             ),
             const SizedBox(height: 5),
             FloatingActionButton(
+              heroTag: '2',
               onPressed: () {
                 Navigator.push(
                   context,

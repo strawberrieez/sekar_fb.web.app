@@ -22,18 +22,18 @@ class _AdminInputState extends State<AdminInput> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            pickedImage == null
+            pickedImageUpload == null
                 ? const SizedBox.shrink()
                 : SizedBox(
                     height: 150,
                     width: 150,
-                    child: Image.network('${pickedImage?.path}'),
+                    child: Image.network('${pickedImageUpload?.path}'),
                   ),
             SizedBox(
               width: 250,
               child: ElevatedButton(
                 onPressed: () async {
-                  pickedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
+                  pickedImageUpload = await ImagePicker().pickImage(source: ImageSource.gallery);
                   setState(() {});
                 },
                 child: const Row(
@@ -103,7 +103,6 @@ class _AdminInputState extends State<AdminInput> {
             ),
             ElevatedButton(
               onPressed: () async {
-                pickedImageUpload = pickedImage;
                 await upload();
                 final valNama = inputNama.text;
                 final valHarga = int.parse(inputHarga.text);

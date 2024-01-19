@@ -20,9 +20,7 @@ List<Product> produkList = [];
 
 var isEnd = false;
 
-XFile? pickedImage;
 XFile? pickedImageUpload;
-XFile? pickedImageUpdate;
 
 Product? productDetail;
 

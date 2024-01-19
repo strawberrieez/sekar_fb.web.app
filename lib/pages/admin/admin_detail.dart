@@ -19,11 +19,11 @@ class _AdminDetailState extends State<AdminDetail> {
       appBar: AppBar(
         title: const Text('Detail Barang'),
       ),
-      // floatingActionButton: FloatingActionButton(onPressed: onPressed),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           FloatingActionButton(
+            heroTag: '3',
             onPressed: () {
               setState(() {});
             },
@@ -31,18 +31,21 @@ class _AdminDetailState extends State<AdminDetail> {
           ),
           const SizedBox(height: 5),
           FloatingActionButton(
+            heroTag: '1',
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const AdminEdit()),
+                MaterialPageRoute(builder: (context) => AdminEdit(id: widget.id)),
               );
             },
             child: const Icon(Icons.edit),
           ),
           const SizedBox(height: 5),
           FloatingActionButton(
+            heroTag: '2',
             onPressed: () async {
               await deleteDoc(selectedId);
+
               // ignore: use_build_context_synchronously
               Navigator.pop(context);
               setState(() {});
@@ -66,7 +69,6 @@ class _AdminDetailState extends State<AdminDetail> {
                           width: 220,
                           child: Image.network(productDetail!.image),
                         ),
-                  // Text('$productDetail?.nama'),
                   Text('${productDetail?.nama}'),
                   Text('${productDetail?.harga}'),
                 ],
